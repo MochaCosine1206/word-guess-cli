@@ -1,30 +1,32 @@
-function Letter(letter, letterGuessed) {
-    this.letter = letter;
-    this.letterGuessed = letterGuessed;
-    this.checkGuess = () => {
-        console.log("Your letter is: " + this.letter);
-        if (this.letter.match(/^[a-zA-Z]+$/)) {
-            console.log(this.letter);
-            return this.letter;
-        } else {
-            console.log("_");
-            return "_";
-        }
-    };
-    this.character = () => {
-        //checks char against the underlying character
-        //if it matches, change letterGuessed
-        if (this.letter.match(/^[a-zA-Z]+$/)) {
-            this.letterGuessed = true;
-            console.log(this.letterGuessed);
-        } else {
-            this.letterGuessed = false;
-            console.log(this.letterGuessed);
-        }
-    }
+const inquirer = require('inquirer');
+wordPrompt();
+
+
+
+function wordPrompt() {
+    inquirer
+        .prompt([
+            {
+                name: "wordBlanks",
+                message: "Guess a Letter! "
+            },
+        ]).then(function (answer) {
+            let letter = new Letter(answer.wordBlanks);
+                console.log(letter.letter);
+                console.log(letter.checkGuess());
+        })
 }
 
-let a = new Letter('a', true);
+function Letter(letter) {
+    this.letter = letter;
+    this.guessedLetter = [];
+    this.letterGuessed = null;
+    this.checkGuess = () => {
+        this.guessedLetter.push(letter);
+        console.log(this.guessedLetter);
+        console.log("Your letter is: " + this.letter);
+    };
 
-a.checkGuess();
-a.character();
+}
+
+module.exports = Letter;
