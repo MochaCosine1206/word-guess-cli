@@ -1,32 +1,30 @@
-const inquirer = require('inquirer');
-wordPrompt();
+
+let userGuess;
+let blank = "_";
 
 
-
-function wordPrompt() {
-    inquirer
-        .prompt([
-            {
-                name: "wordBlanks",
-                message: "Guess a Letter! "
-            },
-        ]).then(function (answer) {
-            let letter = new Letter(answer.wordBlanks);
-                console.log(letter.letter);
-                console.log(letter.checkGuess());
-        })
-}
-
-function Letter(letter) {
+function Letter(letter, userGuess) {
     this.letter = letter;
-    this.guessedLetter = [];
+    this.userGuess = userGuess;
     this.letterGuessed = null;
-    this.checkGuess = () => {
-        this.guessedLetter.push(letter);
-        console.log(this.guessedLetter);
-        console.log("Your letter is: " + this.letter);
-    };
-
+    this.isGuess = function() {
+        if(this.userGuess === this.letter) {
+            return letter;
+        } else {
+            return blank;
+        }
+    }
+    this.isCorrect = function(char) {
+        if(char === this.letter) {
+            this.letterGuessed = true;
+            // console.log(this.letterGuessed);
+        } else {
+            this.letterGuessed = false;
+            // console.log(this.letterGuessed);
+        }
+    }
 }
+
 
 module.exports = Letter;
+
